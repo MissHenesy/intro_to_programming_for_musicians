@@ -112,37 +112,48 @@ function get_test_results(arr_test_vals, new_val1, new_val2, new_arr, new_arr_mi
 //------------------------------------------------------------------------
 function myset_add(data, new_value)
 {
-    let myset = new Set(data);
-    let result = [];
+  let myset,
+      result = [];
 
-    myset.add(new_value);
-    result = convert_to_array(myset);
+  data.forEach( (val) => { result.push(val); } );
+  result.push(new_value);
 
-    return result;
+  myset = new Set(result);
+  result = convert_to_array(myset);
+
+  return result;
 }
 //------------------------------------------------------------------------
 function myset_remove(data, remove_value)
 {
-   let myset = new Set(data);
-   let result = [];
+  let myset,
+      result = [];
 
-   myset.delete(remove_value);
-   result = convert_to_array(myset);
+  data.forEach(function (val) {
+    if (val !== remove_value)
+    {
+     result.push(val);
+    }
+  });
 
-   return result;
+  myset = new Set(result);
+  result = convert_to_array(myset);
+
+  return result;
 }
 //------------------------------------------------------------------------
 function myset_has(data, test_value)
 {
-  let myset = new Set(data);
-  result = myset.has(test_value);
+  let result = false;
+
+  data.forEach( (val) => { if (val === test_value) result = true; } );
+
   return result;
 }
 //------------------------------------------------------------------------
 function myset_size(data)
 {
-  let result = new Set(data);
-  return result.size;
+  return data.length;
 }
 //------------------------------------------------------------------------
 /************************************************************************/
@@ -165,7 +176,7 @@ function convert_to_array(obj)
 //------------------------------------------------------------------------
 function arrays_equal(arr1, arr2)
 {
-  if (arr1.length !== arr2.length) return false;
+  if (myset_size(arr1) !== myset_size(arr2)) return false;
   for (let key in arr1)
   {
     if (arr1[key] !== arr2[key]) return false;
