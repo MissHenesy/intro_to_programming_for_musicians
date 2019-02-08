@@ -115,10 +115,18 @@ function myset_add(data, new_value)
   let myset,
       result = [];
 
+  // If built-in functions were allowed, I'd create a set and use
+  // myset.add(new_value), but since they're not, we'll do this
+  // the array way.
   data.forEach( (val) => { result.push(val); } );
   result.push(new_value);
 
+  // Converting the result array to a set will ensure we suppress any
+  // dupe values and retain only unique values.
   myset = new Set(result);
+
+  // And now we convert the set back to an array so that we can do
+  // array things with the result.
   result = convert_to_array(myset);
 
   return result;
@@ -136,7 +144,12 @@ function myset_remove(data, remove_value)
     }
   });
 
+  // Converting the result array to a set will ensure we suppress any
+  // dupe values and retain only unique values.
   myset = new Set(result);
+
+  // And now we convert the set back to an array so that we can do
+  // array things with the result.
   result = convert_to_array(myset);
 
   return result;
