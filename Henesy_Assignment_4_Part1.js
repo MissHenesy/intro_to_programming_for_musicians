@@ -157,9 +157,8 @@ function myset_remove(data, remove_value)
 //------------------------------------------------------------------------
 function myset_has(data, test_value)
 {
-  let result = false;
-
-  data.forEach( (val) => { if (val === test_value) result = true; } );
+  let result;
+  result = (data.indexOf(test_value) > -1) ? true : false;
 
   return result;
 }
