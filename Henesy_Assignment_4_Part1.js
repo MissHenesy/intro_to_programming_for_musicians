@@ -1,8 +1,16 @@
 /************************************************************************/
 /* ASSIGNMENT 4: PART 1                                                 */
 /************************************************************************/
-run_my_functions()
-function run_my_functions()
+run_tests();
+
+//------------------------------------------------------------------------
+/************************************************************************/
+//------------------------------------------------------------------------
+// FUNCTIONS TO RUN MY FUNCTIONS!
+//------------------------------------------------------------------------
+/************************************************************************/
+//------------------------------------------------------------------------
+function run_tests()
 {
   let arr_vals,
       new_val1,
@@ -15,24 +23,24 @@ function run_my_functions()
   new_val2 = 4;
   new_arr = [1,2,3,4];
   new_arr_minus_one = [1,2,4];
-  run_test_cases(arr_vals, new_val1, new_val2, new_arr,new_arr_minus_one);
+  get_test_results(arr_vals, new_val1, new_val2, new_arr,new_arr_minus_one);
 
   arr_vals = ["cats","spiders","ghosts","furbies"];
   new_val1 = "furbies";
   new_val2 = "red pandas";
   new_arr = ["cats","furbies","ghosts","red pandas","spiders"];
   new_arr_minus_one = ["cats","ghosts","red pandas","spiders"];
-  run_test_cases(arr_vals, new_val1, new_val2, new_arr,new_arr_minus_one);
+  get_test_results(arr_vals, new_val1, new_val2, new_arr,new_arr_minus_one);
 
   arr_vals = ["oolong","green","rooibos","yerba mate","matcha"];
   new_val1 = "oolong";
   new_val2 = "pu'er";
   new_arr = ["oolong","rooibos","yerba mate","green","pu'er","matcha"];
   new_arr_minus_one = ["green","rooibos","yerba mate","matcha","pu'er"];
-  run_test_cases(arr_vals, new_val1, new_val2, new_arr,new_arr_minus_one);
+  get_test_results(arr_vals, new_val1, new_val2, new_arr,new_arr_minus_one);
 }
 //------------------------------------------------------------------------
-function run_test_cases(arr_test_vals, new_val1, new_val2, new_arr, new_arr_minus_one)
+function get_test_results(arr_test_vals, new_val1, new_val2, new_arr, new_arr_minus_one)
 {
   let test_set = arr_test_vals;
   let new_set;
@@ -96,7 +104,11 @@ function run_test_cases(arr_test_vals, new_val1, new_val2, new_arr, new_arr_minu
 }
 
 //------------------------------------------------------------------------
+/************************************************************************/
+//------------------------------------------------------------------------
 // MAIN ASSIGNMENT FUNCTIONS
+//------------------------------------------------------------------------
+/************************************************************************/
 //------------------------------------------------------------------------
 function myset_add(data, new_value)
 {
