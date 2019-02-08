@@ -1,0 +1,163 @@
+/************************************************************************/
+/* ASSIGNMENT 4: PART 1                                                 */
+/************************************************************************/
+run_my_functions()
+function run_my_functions()
+{
+  let arr_vals,
+      new_val1,
+      new_val2,
+      new_arr,
+      new_arr_minus_one;
+
+  arr_vals = [1,2,3];
+  new_val1 = 3;
+  new_val2 = 4;
+  new_arr = [1,2,3,4];
+  new_arr_minus_one = [1,2,4];
+  run_test_cases(arr_vals, new_val1, new_val2, new_arr,new_arr_minus_one);
+
+  arr_vals = ["cats","spiders","ghosts","furbies"];
+  new_val1 = "furbies";
+  new_val2 = "red pandas";
+  new_arr = ["cats","furbies","ghosts","red pandas","spiders"];
+  new_arr_minus_one = ["cats","ghosts","red pandas","spiders"];
+  run_test_cases(arr_vals, new_val1, new_val2, new_arr,new_arr_minus_one);
+
+  arr_vals = ["oolong","green","rooibos","yerba mate","matcha"];
+  new_val1 = "oolong";
+  new_val2 = "pu'er";
+  new_arr = ["oolong","rooibos","yerba mate","green","pu'er","matcha"];
+  new_arr_minus_one = ["green","rooibos","yerba mate","matcha","pu'er"];
+  run_test_cases(arr_vals, new_val1, new_val2, new_arr,new_arr_minus_one);
+}
+//------------------------------------------------------------------------
+function run_test_cases(arr_test_vals, new_val1, new_val2, new_arr, new_arr_minus_one)
+{
+  let test_set = arr_test_vals;
+  let new_set;
+
+  console.log("------------------------------");
+  console.log("*****  RUNNING TEST  *********");
+  console.log("------------------------------");
+  console.log("TEST SET VALUES: ");
+  console.log(test_set);
+  console.log("------------------------------");
+
+  console.log("... Creating new_set....");
+  new_set = myset_add(test_set, new_val1);
+  console.log("Created new_set and added value '" + new_val1 + "', did it succeed?");
+  console.log("Original test_set vals: " + test_set);
+  console.log("new_set vals: " + new_set);
+  if ( arrays_equal(new_set.sort(), test_set.sort()) )
+  {
+    console.log("RESULT: Succeeded!");
+  } else {
+    console.log("RESULT: Failed :-(");
+  }
+  console.log("------------------------------");
+  console.log("new_set is currently: " + new_set);
+  console.log("... Adding new value '" + new_val2 + "' to new_set ....");
+  new_set = myset_add(test_set, new_val2);
+  console.log("Did we succeed?");
+  console.log("new_set vals after adding new value: " + new_set);
+
+  if ( arrays_equal(new_set.sort(), new_arr.sort()) )
+  {
+    console.log("RESULT: Succeeded!");
+  } else {
+    console.log("RESULT: Failed :-(");
+  }
+  console.log("------------------------------");
+  console.log("Now we will remove value '" + new_val1 + "' from new_set...");
+  console.log("new_set is currently: " + new_set);
+  console.log("... Removing value....");
+  new_set = myset_remove(new_set, new_val1);
+  console.log("Did we succeed in removing the value?");
+  console.log("new_set is now: " + new_set);
+  if ( arrays_equal(new_set.sort(), new_arr_minus_one.sort()) )
+  {
+    console.log("RESULT: Succeeded!");
+  } else {
+    console.log("RESULT: Failed :-(");
+  }
+  console.log("------------------------------");
+
+  console.log("Now let's see if new_set has value '" + new_val1 + "'");
+  console.log("... Running 'myset_has()' function ...")
+  console.log("Is '" + new_val1 + "' in new_set? " + myset_has(new_set, new_val1));
+  console.log("------------------------------");
+
+  console.log("Now let's see if new_set has value '" + new_val2 + "'");
+  console.log("... Running 'myset_has()' function ...")
+  console.log("Is '" + new_val2 + "' in new_set? " + myset_has(new_set, new_val2));
+  console.log("------------------------------");
+  console.log("\n");
+}
+
+//------------------------------------------------------------------------
+// MAIN ASSIGNMENT FUNCTIONS
+//------------------------------------------------------------------------
+function myset_add(data, new_value)
+{
+    let myset = new Set(data);
+    let result = [];
+
+    myset.add(new_value);
+    result = convert_to_array(myset);
+
+    return result;
+}
+//------------------------------------------------------------------------
+function myset_remove(data, remove_value)
+{
+   let myset = new Set(data);
+   let result = [];
+
+   myset.delete(remove_value);
+   result = convert_to_array(myset);
+
+   return result;
+}
+//------------------------------------------------------------------------
+function myset_has(data, test_value)
+{
+  let myset = new Set(data);
+  result = myset.has(test_value);
+  return result;
+}
+//------------------------------------------------------------------------
+function myset_size(data)
+{
+  let result = new Set(data);
+  return result.size;
+}
+//------------------------------------------------------------------------
+/************************************************************************/
+//------------------------------------------------------------------------
+// HELPER FUNCTIONS
+//------------------------------------------------------------------------
+/************************************************************************/
+//------------------------------------------------------------------------
+function convert_to_array(obj)
+{
+  let result = [];
+  // If built-in functions were allowed, I'd use "Array.from(obj)" to convert
+  // my object, but, since they're not, I'll do this the old fashioned way.
+  for (let item of obj)
+  {
+    result.push(item);
+  }
+  return result;
+}
+//------------------------------------------------------------------------
+function arrays_equal(arr1, arr2)
+{
+  if (arr1.length !== arr2.length) return false;
+  for (let key in arr1)
+  {
+    if (arr1[key] !== arr2[key]) return false;
+  }
+  return true;
+}
+//---------------------------------------------------------------------
