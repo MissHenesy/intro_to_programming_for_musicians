@@ -125,7 +125,7 @@ function play_piano(song)
         note_ends = note_starts + note_lasts;
         curr_beat = beat;
 
-        if (prev_beat != curr_beat)
+        if (prev_beat !== curr_beat)
         {
           str_result += "AT BEAT: " + beat + "\n";
         }
