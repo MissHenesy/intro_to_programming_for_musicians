@@ -87,8 +87,9 @@ function play_piano(song)
   let set_of_beats = new Set();
   let prev_beat = -1;
   let curr_beat = -1;
-  let curr_starts = -1;
-  let curr_lasts = -1;
+  let note_starts = -1;
+  let note_lasts = -1;
+  let note_ends = -1;
 
   // Populate set_of_beats, using the rhythm notations from our
   // song. We can use this set to find the beats where some kind
@@ -117,81 +118,22 @@ function play_piano(song)
 
   for (let beat of set_of_beats)
   {
-      for (let action of song_music)
+      for (let note of song_music)
       {
-        curr_starts = action.starts_at;
-        curr_lasts = action.lasts;
+        note_starts = note.starts_at;
+        note_lasts = note.lasts;
+        note_ends = note_starts + note_lasts;
         curr_beat = beat;
 
         if (prev_beat != curr_beat)
         {
           str_result += "AT BEAT: " + beat + "\n";
         }
-        if (curr_starts === beat)
+        if (note_starts === beat)
         {
-          str_result += " Play " + action.note + "\n";
-        } else if ((curr_starts + curr_lasts) === beat) {
-          str_result += " Release " + action.note + "\n";
-        }
-        prev_beat = beat;
-      }
-  }
-  return str_result;
-}
-function play_piano_SUBMITTED(song)
-{
-  let song_title = song[0];
-  let sorted_song = get_sorted_song(song);
-  let prev_beat = -1;
-  let curr_beat = -1;
-  let curr_starts = -1;
-  let curr_lasts = -1;
-  let set_of_beats = new Set();
-  let str_result = "";
-
-  // Populate set_of_beats, using the rhythm notations from our
-  // song. We can use this set to find the beats where some kind
-  // of action happens; that is, we have a set of values created right
-  // from the "starts_at" and "lasts" values in our song.
-
-  // NOTE:: Yes! This is KIND of like my previous idea of trying to create
-  // a loop based on "beats_per_bar", but now, instead of trying to tell
-  // the function how many beats there are per measure, and trying to figure
-  // out a lot of fancy math from there, we now have a set of *actual*
-  // beat values that will be used in the song, and we can compare
-  // our starting & ending times with the values in this set.)
-  sorted_song.forEach(function (prop) {
-    if (typeof prop === "object")
-    {
-      set_of_beats.add(prop.starts_at);
-      set_of_beats.add(prop.starts_at + prop.lasts);
-   }
-  });
-  set_of_beats = new Set(Array.from(set_of_beats).sort());
-
-  str_result += "------------------------------------\n";
-  str_result += song_title + "\n";
-  str_result += "------------------------------------\n";
-
-  for (let beat of set_of_beats)
-  {
-      for (let action of song)
-      {
-        curr_starts = action.starts_at;
-        curr_lasts = action.lasts;
-        curr_beat = beat;
-
-        if (prev_beat != curr_beat)
-        {
-          str_result += "AT BEAT: " + beat + "\n";
-        }
-        if (curr_starts === beat)
-        {
-          str_result += " Play " + action.note + "\n";
-        }
-        if ((curr_starts + curr_lasts) === beat)
-        {
-          str_result += " Release " + action.note + "\n";
+          str_result += " Play " + note.note + "\n";
+        } else if (note_ends === beat) {
+          str_result += " Release " + note.note + "\n";
         }
         prev_beat = beat;
       }
