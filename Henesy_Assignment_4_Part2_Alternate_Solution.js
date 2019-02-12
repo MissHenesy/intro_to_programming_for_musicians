@@ -16,7 +16,7 @@ function run_piano_player()
 
   // This test demonstrates that the demo given in our assignment will
   // work with my solution.
-  my_song = { song_title: "SONG TITLE: 'Demo'",
+  my_song = { song_title: "Demo",
     song_music: [
       { note: "A", starts_at: 0, lasts: 3 },
       { note: "B", starts_at: 0, lasts: 3 },
