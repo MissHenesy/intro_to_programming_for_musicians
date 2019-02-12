@@ -26,7 +26,7 @@ function run_piano_player()
   console.log(play_piano(my_song));
 
   // This test demonstrates that a slightly different version of the demo,
-  // using out-of-order "starts_at" values and longer "lasts" values will
+  // using out-of-order "starts_at" values, and longer "lasts" values, will
   // produce the correct output.
   my_song = { song_title: "TEST #1",
     song_music: [
@@ -42,9 +42,9 @@ function run_piano_player()
 
   // This test demonstrates that a song with a last beat
   // that does not release multiple notes will still produce the correct
-  // output (i.e., this proves that the function "get_map_of_end_beats"
+  // output. I.E., this proves that the function "get_map_of_end_beats"
   // isn't doing anything wonky at the end, if it doesn't have a bunch
-  // of the same ending beats).
+  // of the same ending beats.
   my_song = { song_title: "TEST #2",
     song_music: [
       { note: "C", starts_at: 0, lasts: 1 },
@@ -54,6 +54,7 @@ function run_piano_player()
     ]
   };
   console.log(play_piano(my_song));
+
   // This test demonstrates that a more complicated song can work with my
   // solution. In this case, the song goes on for 2 measures, and uses more
   // chords than the the previous 2 examples. I've also jumbled the order
@@ -82,7 +83,6 @@ function run_piano_player()
   };
   console.log(play_piano(my_song));
 }
-
 //------------------------------------------------------------------------
 /************************************************************************/
 //------------------------------------------------------------------------
