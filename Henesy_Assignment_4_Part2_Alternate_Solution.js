@@ -230,7 +230,7 @@ function get_sorted_song(arr_song, sorted_field)
 {
   let a_field,
       b_field,
-      sorted;
+      sorted = [];
 
   switch (sorted_field)
   {
@@ -252,8 +252,7 @@ function get_sorted_song(arr_song, sorted_field)
         return 0;
       });
       break;
-    default:
-      "";
   }
+
   return sorted;
 }
