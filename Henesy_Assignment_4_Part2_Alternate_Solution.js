@@ -171,7 +171,7 @@ function get_map_of_end_beats(song)
   // Example of output::
   // Map { 2 => ['A'], 4 => ['C,G,Bb,E'], 6 => ['D,F#,A,B'] }
   let end_beat_map = new Map();
-  let sorted_song = get_sorted_song(song, "ends");
+  let sorted_song = get_sorted_song(song, "ends").slice(); // .slice() ensures we do not alter the structure of the originating array
   let this_note = "";
   let this_note_end = -1;
   let prev_note_end = -1;
