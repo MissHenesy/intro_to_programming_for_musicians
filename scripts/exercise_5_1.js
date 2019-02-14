@@ -44,7 +44,8 @@ function traverse_nodes(el)
     el = el.parentNode;
   }
   sp_answer_field.innerHTML = "Starting with myself, " +
-    " the list of nodes above me are: <br />" + result.toString();
+    " the list of parent nodes above me are: <br />" +
+    "<i>" + result.toString() + "</i>";
 }
 //------------------------------------------------------------------------
 /************************************************************************/
