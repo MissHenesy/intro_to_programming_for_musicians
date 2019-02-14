@@ -1,0 +1,73 @@
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="stylesheets/exercise_5_1.css">
+    <script language="javascript" type="text/javascript" src="scripts/exercise_5_1.js"></script>
+  </head>
+  <body onload="do_onload_actions();">
+    <h1>Henesy Submission for Exercise 5.1</h1>
+    <div id="div_display_buttons" class="center">
+      <button id="btn_age_calculator" onclick="display_block('frm_age_calculator');">
+        Show Age Calculator
+      </button>
+      <button id="btn_remove_images" onclick="display_block('div_image_remover');">
+        Show Image Remover
+      </button>
+      <button id="btn_remove_images" onclick="display_block('div_node_traverser');">
+        Show Node Traverser
+      </button>
+    </div>
+    <form id="frm_age_calculator" style="display: none;">
+      <h1>Age Calculator</h1>
+      <hr />
+      <div id="div_age_form">
+        <div id="div_name">
+          <span id="lbl_name">Name:</span>
+          <input id="txt_name" type="text" />
+        </div>
+        <div id="div_dob">
+          <span id="lbl_birthday">Birthday:</span>
+          <input id="dt_birthday" type="date" /><br />
+        </div>
+        <div id="div_btn_get_age">
+          <button id="btn_get_age" type="button" onclick="reveal_age()">
+            Calculate Age
+          </button>
+        </div>
+        <div id="div_reveal_age">
+          <span id="sp_age_answer" />
+        </div>
+        <hr />
+      </div>
+    </form>
+    <div id="div_image_remover" style="display: none;">
+      <h1>Here's a bunch of images!</h1>
+      <h3 class="center">Want to see fewer images? Click on any image and it will be removed!</h3>
+      <div id="div_images">
+        <img src="images/exercise_5_1/ritz_brothers.jpg" class="img_comic_bros" /><br />
+        <img src="images/exercise_5_1/stooges.jpg" class="img_comic_bros" />
+        <img src="images/exercise_5_1/marx_brothers2.jpg" class="img_comic_bros" /><br />
+        <img src="images/exercise_5_1/smothers_brothers3.jpg" class="img_comic_bros" />
+        <img src="images/exercise_5_1/marx_brothers_love_happy.jpeg" class="img_comic_bros" /><br />
+      </div>
+    </div>
+    <div id="div_node_traverser" style="display: none;">
+      <h1>Hello, I Am The Node Traverser!</h1>
+      <span id="sp_node_traverser" class="center">
+        Here we will list out all of the nodes on this form, starting with ... me!<br />
+        I'm a span tag, called "sp_node_traverser", that lives inside of a div tag called
+        "div_node_traverser".<br />
+        When you are ready to see all of the nodes that exist above me, click the
+        "Start Traversing" button!<br />
+      </span>
+      <div id="btn_node_traverser" class="center">
+        <button id="btn_traverse_nodes"
+          onclick="traverse_nodes(document.getElementById('sp_node_traverser'));">
+          Start Traversing
+        </button>
+      </div>
+      <div id="div_traverse_answer" class="center">
+        <span id="sp_traverse_answer" />
+      </div>
+    </div>
+  </body>
+</html>

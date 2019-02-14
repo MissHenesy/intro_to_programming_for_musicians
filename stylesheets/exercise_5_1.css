@@ -1,0 +1,60 @@
+body {
+  font: 18px verdana;
+  padding: 2em;
+  margin : 0;
+  background: linen;
+}
+h1 {
+  text-align: center;
+  font-size: 120%;
+  font-weight: bold;
+}
+h3 {
+  font-size: 90%;
+  font-weight: normal;
+}
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: 100%;
+  width: 200px;
+  margin: 0;
+
+  -webkit-box-sizing: border-box; /* For legacy WebKit based browsers */
+  -moz-box-sizing: border-box; /* For legacy (Firefox <29) Gecko based browsers */
+       box-sizing: border-box;
+}
+form {
+  position: relative;
+  width: 740px;
+  height: 498px;
+  margin: 0 auto;
+  padding: 1em;
+  background: #FFF;
+}
+form #div_age_form span, button {
+  margin: 12px 0px 8px 25px;
+}
+form #div_age_form input {
+  margin: 0px 0px 8px 70px;
+  width: 400px;
+}
+form #div_age_form input[type="date"] {
+  margin: 0px 0px 8px 46px;
+}
+form #div_age_form input {
+  margin: 0px 0px 8px 70px;
+}
+form #div_age_form .answer_field {
+  display: block;
+  margin-top: 25px;
+}
+
+.center {
+  display: block;
+  text-align: center;
+}
+.img_comic_bros {
+  height: 300px;
+  padding: 12px 0px 12px 12px;
+  cursor: pointer;
+}
