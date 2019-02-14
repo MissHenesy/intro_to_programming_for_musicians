@@ -1,5 +1,10 @@
-
-function do_onload_actions()
+/************************************************************************/
+//------------------------------------------------------------------------
+// MAIN EXERCISE FUNCTIONS
+//------------------------------------------------------------------------
+/************************************************************************/
+//------------------------------------------------------------------------
+function delete_images()
 {
   let imgTag = document.getElementsByTagName("img");
   for (let img of imgTag)
@@ -9,8 +14,55 @@ function do_onload_actions()
     });
   }
 }
+//------------------------------------------------------------------------
+function reveal_age()
+{
+  let name = document.getElementById("txt_name").value;
+  let bday = new Date(document.getElementById("dt_birthday").value);
+  let age = calculate_age(bday);
+  let response = document.getElementById("sp_age_answer");
+
+  response.innerHTML = name + " is <b>" + age + "</b> years of age.";
+}
+//------------------------------------------------------------------------
+function calculate_age(dob)
+{
+  let diff_ms = Date.now() - dob.getTime();
+  let age_dt = new Date(diff_ms);
+
+  return Math.abs(age_dt.getUTCFullYear() - 1970);
+}
+//------------------------------------------------------------------------
+function traverse_nodes(el)
+{
+  let result = [];
+  let sp_answer_field = document.getElementById("sp_traverse_answer");
+
+  while (el)
+  {
+    result.push(el.nodeName);
+    el = el.parentNode;
+  }
+  sp_answer_field.innerHTML = "Starting with myself, " +
+    " the list of nodes above me are: <br />" + result.toString();
+}
+//------------------------------------------------------------------------
+/************************************************************************/
+//------------------------------------------------------------------------
+// HELPER FUNCTIONS
+//------------------------------------------------------------------------
+/************************************************************************/
+//------------------------------------------------------------------------
+function do_onload_actions()
+{
+  // Handles any action that should happen when the HTML page loads.
+  delete_images();
+}
+//------------------------------------------------------------------------
 function display_block(block_id)
 {
+  // Shows/hides divs containing solutions to
+  // Exercise 1, 2, and 3 respectively
   let div_age = document.getElementById("frm_age_calculator");
   let div_images = document.getElementById("div_image_remover");
   let div_nodes = document.getElementById("div_node_traverser");
@@ -35,35 +87,4 @@ function display_block(block_id)
       div_images.style["display"] = "none";
       div_nodes.style["display"] = "block";
   }
-}
-function reveal_age()
-{
-  let name = document.getElementById("txt_name").value;
-  let bday = new Date(document.getElementById("dt_birthday").value);
-  let age = calculate_age(bday);
-  let response = document.getElementById("sp_age_answer");
-
-  response.innerHTML = name + " is <b>" + age + "</b> years of age.";
-}
-
-function calculate_age(dob)
-{
-  let diff_ms = Date.now() - dob.getTime();
-  let age_dt = new Date(diff_ms);
-
-  return Math.abs(age_dt.getUTCFullYear() - 1970);
-}
-
-function traverse_nodes(el)
-{
-  let result = [];
-  let sp_answer_field = document.getElementById("sp_traverse_answer");
-
-  while (el)
-  {
-    result.push(el.nodeName);
-    el = el.parentNode;
-  }
-  sp_answer_field.innerHTML = "Starting with myself, " +
-    " the list of nodes above me are: <br />" + result.toString();
 }
