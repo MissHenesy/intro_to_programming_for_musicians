@@ -1,4 +1,4 @@
-use_bpm 80
+use_bpm 85
 use_synth_defaults amp: 0.7, release: 1, sustain: 2
 
 #*********************
@@ -174,12 +174,13 @@ with_fx :reverb do
   play :e4
   play :c4
   sleep 1
-  play :g4, sustain: 1.5
-  play :d4, sustain: 1.5
-  play :bb3, sustain: 1.5
-  play :g3, sustain: 1.5
+  with_fx :level, amp: 0.1 do
+    play :g4, sustain: 1.5
+    play :d4, sustain: 1.5
+    play :bb3, sustain: 1.5
+    play :g3, sustain: 1.5
+  end
   
-  #Bar 11
   #Bar 11
   in_thread do
     with_fx :level, amp: 0.3 do
@@ -192,6 +193,7 @@ with_fx :reverb do
   play :g4
   play :d4
   play :bb3
+  play :g3
   sleep 1
   play :g4
   play :d4
@@ -203,12 +205,11 @@ with_fx :reverb do
   play :g4
   play :d4
   play :bb3
-  sleep 1
+  sleep 1.25
   play :g4, sustain: 1
   play :d4, sustain: 1
   play :bb3, sustain: 1
-  play :g3, sustain: 1
-  sleep 0.5
+  sleep 0.75
   play :g3
   sleep 0.5
   
