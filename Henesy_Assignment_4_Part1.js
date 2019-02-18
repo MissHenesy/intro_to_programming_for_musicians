@@ -118,16 +118,22 @@ function myset_add(data, new_value)
   // If built-in functions were allowed, I'd create a set and use
   // myset.add(new_value), but since they're not, we'll do this
   // the array way.
-  data.forEach( (val) => {
-      result.push(val);
-  });
+  //
+  // WHAT WAS I THINKING???
+  // There's no need to push a new value into a new
+  // array called "result". "data" is already an array,
+  // so let's save ourselves a bit of performance juice
+  // and just stick with one array.
+  //data.forEach( (val) => {
+  //     result.push(val);
+  // });
 
   if (!myset_has(data, new_value))
   {
-    result.push(new_value);
+    data.push(new_value);
   }
 
-  return result;
+  return data;
 }
 //------------------------------------------------------------------------
 function myset_remove(data, remove_value)
