@@ -231,11 +231,11 @@ with_fx :reverb do
   end
   
   #Bar 13
+  use_synth :dsaw
+  play :g2, sustain: 2, decay: 0.5, amp: 0.3
   use_synth :piano
   play :e4, sustain: 4, decay: 0.5
   play :c4, sustain: 4, decay: 0.5
   play :a3, sustain: 4, decay: 0.5
   play :f3, sustain: 4, decay: 0.5
-  use_synth :dsaw
-  play :g2, sustain: 2, decay: 0.5, amp: 0.3
 end
