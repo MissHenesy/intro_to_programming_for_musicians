@@ -1,5 +1,3 @@
-//do_onload_actions();
-
 function do_onload_actions()
 {
   display_album_art();
