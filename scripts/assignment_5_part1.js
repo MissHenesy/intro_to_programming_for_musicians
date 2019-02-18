@@ -66,6 +66,13 @@ function get_albums()
       art: "https://upload.wikimedia.org/wikipedia/en/8/84/MatthewSweet100Fun.jpg"
     },
     {
+      title: "They Don't Know",
+      artist: "Tracey Ullman",
+      album: "You Broke My Heart in 17 Places",
+      year: 1983,
+      art: "https://upload.wikimedia.org/wikipedia/en/b/be/Tracey17places.jpg"
+    },
+    {
       title: "Senses Working Overtime",
       artist: "XTC",
       album: "English Settlement",
@@ -120,13 +127,6 @@ function get_albums()
       album: "Dora Hall Sings Top Teen Tunes",
       year: 1964,
       art: "https://4.bp.blogspot.com/-IWzU36Zy9ac/WkFca0B2LII/AAAAAAAAq1g/2NGPNY8h3cMNHVFAcKVThiUGS_X9qgq5QCLcBGAs/s1600/dora%2B1.jpg"
-    },
-    {
-      title: "They Don't Know",
-      artist: "Tracey Ullman",
-      album: "You Broke My Heart in 17 Places",
-      year: 1983,
-      art: "https://upload.wikimedia.org/wikipedia/en/b/be/Tracey17places.jpg"
     }
   ];
   return result;

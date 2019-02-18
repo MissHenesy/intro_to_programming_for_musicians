@@ -49,10 +49,14 @@ form #div_age_form .answer_field {
   margin-top: 25px;
 }
 div.info_div {
+  position: relative;
+  left: 32%;
+  padding: 12px;
   margin: 25px 0px 25px 0px;
-  width: 100%;
+  width: 35%;
   height: 100px;
-  text-align: center;
+  text-align: left;
+  border: 1px solid black;
 }
 #div_spacer {
   margin-bottom: 100px;
