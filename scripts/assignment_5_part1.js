@@ -45,7 +45,7 @@ function get_albums()
     {
       title: "Someone Saved My Life Tonight",
       artist: "Elton John",
-      album: "Captain Fantastic",
+      album: "Captain Fantastic and the Brown Dirt Cowboy",
       year: 1975,
       art: "https://upload.wikimedia.org/wikipedia/en/1/16/Elton_John_-_Captain_Fantastic_and_the_Brown_Dirt_Cowboy.jpg"
     },
