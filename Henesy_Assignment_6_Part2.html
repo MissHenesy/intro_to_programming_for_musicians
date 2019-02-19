@@ -118,8 +118,8 @@
     });
 
     calc_operators.on("click", function() {
-      let op_action = $(this).val();
-      if (op_action === "subtract" && !calc_display.text())
+      let opr_action = $(this).val();
+      if (opr_action === "subtract" && !calc_display.text())
       {
         calc_display.text("-");
       }
@@ -128,24 +128,24 @@
         calc_display.attr("name", calc_display.text());
         calc_display.text("");
         calc_total.removeClass();
-        calc_total.addClass(op_action);
+        calc_total.addClass(opr_action);
       }
     });
 
     calc_total.on("click", function() {
       let num1 = parseFloat(calc_display.attr("name"));
       let num2 = parseFloat(calc_display.text());
-      let calc_class = calc_total.attr("class");
-      calc_display.text(get_calc_total(num1, num2, calc_class));
+      let calc_action = calc_total.attr("class");
+      calc_display.text(get_calc_total(num1, num2, calc_action));
     });
 
     $("#div_calculator #btn_clear").on("click", () => calc_display.html(""));
   }
 
-  function get_calc_total(val1, val2, class_name)
+  function get_calc_total(val1, val2, action)
   {
     let result = "";
-    switch(class_name)
+    switch(action)
     {
       case "add":
         result = val1 + val2;
