@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <style type="text/css">
+      :root {
+        --calc-bgcolor: #c0c0c0;
+        --calc-display: #444040;
+        --calc-clear: #b90000;
+        --calc-operators: #f68200;
+        --calc-total: #0b840b;
+        --calc-buttons: #b0b0b0;
+      }
+      body {
+        font: 18px Helvetica, Arial, sans-serif;
+      }
+      h1, h2, h3, h4, h5 {
+        text-align: center;
+      }
+      #div_calculator {
+        margin: 0 auto;
+        font-size: 0px;
+        width: 426px;
+        border: 5px solid #ccc;
+        background-color: var(--calc-bgcolor);
+      }
+      #div_calculator #div_block1, #div_block2 {
+        display: inline-block;
+        vertical-align: top;
+      }
+      #div_calculator #div_display {
+        display: inline-block;
+        height: 90px;
+        width: 400px;
+        padding: 12px;
+        background-color: var(--calc-display);
+        font: 45px Arial, sans-serif;
+        color: #fff;
+        display: table-cell;
+        vertical-align: middle;
+        text-align: right;
+      }
+      #div_calculator button {
+        height: 80px;
+        width: 106px;
+        border: 1px solid #ccc;
+        background-color: var(--calc-buttons);
+        font-weight: bold;
+        font-size: 35px;
+        margin: 0;
+        padding: 0;
+      }
+      #div_calculator #btn_0 {
+        width: 212px;
+      }
+      #div_calculator #btn_clear {
+        background-color: var(--calc-clear);
+      }
+      #div_calculator #btn_total {
+        width: 319px;
+        background-color: var(--calc-total);
+      }
+      #div_calculator #div_operators button {
+        background-color: var(--calc-operators);
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Henesy Assignment 6, Part 2</h1>
+    <h2>DIY Calculator</h2>
+    <div id="div_calculator">
+      <div id="div_display"></div>
+      <div id="div_block0">
+        <button id="btn_clear" value="clear">C</button>
+        <button id="btn_total" value="total">=</button>
+      </div>
+      <div id="div_block1">
+        <div id="div_numbers">
+          <button id="btn_7" value="7">7</button>
+          <button id="btn_8" value="8">8</button>
+          <button id="btn_9" value="9">9</button><br />
+          <button id="btn_4" value="4">4</button>
+          <button id="btn_5" value="5">5</button>
+          <button id="btn_6" value="6">6</button><br />
+          <button id="btn_1" value="1">1</button>
+          <button id="btn_2" value="2">2</button>
+          <button id="btn_3" value="3">3</button><br />
+          <button id="btn_0" value="0">0</button>
+          <button id="btn_decimal" value=".">.</button><br />
+        </div>
+      </div>
+      <div id="div_block2">
+        <div id="div_operators">
+          <button id="btn_divide" value="divide">&divide;</button><br />
+          <button id="btn_multiply" value="multiply">x</button><br />
+          <button id="btn_subtract" value="subtract">-</button><br />
+          <button id="btn_add" value="add">+</button><br />
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+<script language="javascript">
+  let num1 = "";
+  let num2 = "";
+  let operator = "";
+  let total = "";
+  let prev_action = "";
+
+  $(document).ready(function() {
+    activate_calculator();
+  });
+
+  function activate_calculator()
+  {
+    let calc_display = $("#div_calculator #div_display");
+    let calc_numbers = $("#div_calculator #div_numbers > button");
+    let calc_operators = $("#div_calculator #div_operators > button");
+    let calc_total = $("#div_calculator #btn_total");
+    let calc_clear = $("#div_calculator #btn_clear");
+
+    calc_numbers.on("click", function() {
+      if (prev_action === "operator_click")
+      {
+        display_calc_numbers($(this).val());
+      }
+      else
+      {
+        display_calc_numbers(calc_display.text() + $(this).val());
+      }
+      prev_action = "number_click";
+    });
+
+    calc_operators.on("click", function() {
+      //operator = $(this).val();
+      if (operator === "")
+      {
+        num1 = calc_display.text();
+        operator = $(this).val();
+        display_calc_numbers("");
+      }
+      // else if ($(this).val() === "subtract" && !calc_display.text())
+      // {
+      //   display_calc_numbers("-");
+      // }
+      else
+      {
+        display_calc_numbers(get_calc_total());
+        operator = $(this).val();
+        prev_action = "operator_click";
+      }
+    });
+
+    calc_total.on("click", function() {
+      display_calc_numbers(get_calc_total());
+      reset_variables();
+    });
+
+    calc_clear.on("click", function() {
+      display_calc_numbers("");
+      reset_variables();
+    });
+  }
+
+  function get_calc_total()
+  {
+    let result = "";
+    let calc_display = $("#div_calculator #div_display");
+    if (num1 === "")
+    {
+      num1 = calc_display.text();
+    }
+    else
+    {
+      num2 = calc_display.text();
+    }
+    num1 = parseFloat(num1);
+    num2 = parseFloat(num2);
+    console.log(num1 + operator + num2);
+    switch(operator)
+    {
+      case "add":
+        total = num1 + num2;
+        break;
+      case "subtract":
+        total = num1 - num2;
+        break;
+      case "multiply":
+        total = num1 * num2;
+        break;
+      case "divide":
+        total = num1 / num2;
+    }
+    if ($.isNumeric(total))
+    {
+      result = parseFloat(total.toFixed(6));
+      num1 = total;
+      num2 = "";
+    }
+    else
+    {
+      result = "Not a number";
+      reset_variables();
+    }
+    return result;
+  }
+
+  function display_calc_numbers(val)
+  {
+    let calc_display = $("#div_calculator #div_display");
+    calc_display.text(val);
+  }
+
+  function reset_variables()
+  {
+    num1 = "";
+    num2 = "";
+    operator = "";
+    total = "";
+    prev_action = "";
+    console.log(num1 + ", " + num2 + ", " + operator + ", " + total);
+  }
+</script>
