@@ -4,6 +4,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <style type="text/css">
       :root {
+        --page-bgcolor: #174548;
+        --page-titles: #da974d;
         --calc-bgcolor: #c0c0c0;
         --calc-display: #444040;
         --calc-clear: #b90000;
@@ -12,9 +14,11 @@
         --calc-buttons: #b0b0b0;
       }
       body {
+        background-color: var(--page-bgcolor);
         font: 18px Helvetica, Arial, sans-serif;
       }
       h1, h2, h3, h4, h5 {
+        color: var(--page-titles);
         text-align: center;
       }
       #div_calculator {
@@ -33,6 +37,7 @@
         height: 90px;
         width: 400px;
         padding: 12px;
+        border: 1px solid #ccc;
         background-color: var(--calc-display);
         font: 45px Arial, sans-serif;
         color: #fff;
@@ -43,7 +48,6 @@
       #div_calculator button {
         height: 80px;
         width: 106px;
-        border: 1px solid #ccc;
         background-color: var(--calc-buttons);
         font-weight: bold;
         font-size: 35px;
@@ -57,7 +61,7 @@
         background-color: var(--calc-clear);
       }
       #div_calculator #btn_total {
-        width: 319px;
+        width: 213px;
         background-color: var(--calc-total);
       }
       #div_calculator #div_operators button {
@@ -72,7 +76,8 @@
     <div id="div_calculator">
       <div id="div_display"></div>
       <div id="div_block0">
-        <button id="btn_clear" value="clear">C</button>
+        <button id="btn_clear" value="clear">AC</button>
+        <button id="btn_sign" value="sign">+/-</button>
         <button id="btn_total" value="total">=</button>
       </div>
       <div id="div_block1">
@@ -102,6 +107,12 @@
   </body>
 </html>
 <script language="javascript">
+  let num1 = "";
+  let num2 = "";
+  let operator = "";
+  let total = "";
+  let prev_action = "";
+
   $(document).ready(function() {
     activate_calculator();
   });
@@ -109,63 +120,131 @@
   function activate_calculator()
   {
     let calc_display = $("#div_calculator #div_display");
+    let calc_sign = $("#div_calculator #btn_sign");
     let calc_numbers = $("#div_calculator #div_numbers > button");
     let calc_operators = $("#div_calculator #div_operators > button");
     let calc_total = $("#div_calculator #btn_total");
+    let calc_clear = $("#div_calculator #btn_clear");
+
+    display_calc_numbers(0);
 
     calc_numbers.on("click", function() {
-      calc_display.text(calc_display.text() + $(this).val());
-    });
-
-    calc_operators.on("click", function() {
-      let opr_action = $(this).val();
-      if (opr_action === "subtract" && !calc_display.text())
+      if (prev_action === "operator_click")
       {
-        calc_display.text("-");
+        display_calc_numbers($(this).val());
       }
       else
       {
-        calc_display.attr("name", calc_display.text());
-        calc_display.text("");
-        calc_total.removeClass();
-        calc_total.addClass(opr_action);
+        display_calc_numbers(calc_display.text() + $(this).val());
+      }
+      prev_action = "number_click";
+    });
+
+    calc_sign.on("click", function() {
+      if (calc_display.text().indexOf("-") > -1)
+      {
+        display_calc_numbers(calc_display.text().replace("-", ""));
+      }
+      else
+      {
+        display_calc_numbers("-" + calc_display.text());
       }
     });
 
-    calc_total.on("click", function() {
-      let num1 = parseFloat(calc_display.attr("name"));
-      let num2 = parseFloat(calc_display.text());
-      let calc_action = calc_total.attr("class");
-      calc_display.text(get_calc_total(num1, num2, calc_action));
+    calc_operators.on("click", function() {
+      if (operator === "")
+      {
+        num1 = calc_display.text();
+        operator = $(this).val();
+        display_calc_numbers("");
+      }
+      else
+      {
+        if (prev_action === "number_click")
+        {
+          display_calc_numbers(get_calc_total());
+          operator = $(this).val();
+        }
+      }
+      prev_action = "operator_click";
     });
 
-    $("#div_calculator #btn_clear").on("click", () => calc_display.html(""));
+    calc_total.on("click", function() {
+      if (prev_action === "number_click")
+      {
+        display_calc_numbers(get_calc_total());
+        reset_variables();
+      }
+    });
+
+    calc_clear.on("click", function() {
+      display_calc_numbers("");
+      reset_variables();
+    });
   }
 
-  function get_calc_total(val1, val2, action)
+  function get_calc_total()
   {
     let result = "";
-    switch(action)
+    let calc_display = $("#div_calculator #div_display");
+    if (num1 === "")
     {
-      case "add":
-        result = val1 + val2;
-        break;
-      case "subtract":
-        result = val1 - val2;
-        break;
-      case "multiply":
-        result = val1 * val2;
-        break;
-      case "divide":
-        result = val1 / val2;
-    }
-    if ($.isNumeric(result))
-    {
-      return parseFloat(result.toFixed(6));
+      num1 = calc_display.text();
     }
     else
     {
-      return "Not a number";
+      num2 = calc_display.text();
     }
+    num1 = parseFloat(num1);
+    num2 = parseFloat(num2);
+    switch(operator)
+    {
+      case "add":
+        total = num1 + num2;
+        break;
+      case "subtract":
+        total = num1 - num2;
+        break;
+      case "multiply":
+        total = num1 * num2;
+        break;
+      case "divide":
+        total = num1 / num2;
+    }
+    if ($.isNumeric(total))
+    {
+      result = parseFloat(total.toFixed(6));
+      num1 = total;
+      num2 = "";
+    }
+    else
+    {
+      result = "Not a number";
+      reset_variables();
+    }
+    return result;
+  }
+
+  function display_calc_numbers(num)
+  {
+    let result = num;
+    let calc_display = $("#div_calculator #div_display");
+
+    // Trim any leading zeroes from non-zero values
+    if (calc_display.text() && num !== 0)
+    {
+      result = num.toString().replace(/^0|^-0+/, "");
+    }
+    calc_display.text(result);
+  }
+
+  function reset_variables()
+  {
+    num1 = "";
+    num2 = "";
+    operator = "";
+    total = "";
+    prev_action = "";
+    display_calc_numbers(0);
   }
 </script>
