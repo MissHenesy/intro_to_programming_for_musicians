@@ -145,7 +145,7 @@
       {
         display_calc_numbers(calc_display.text().replace("-", ""));
       }
-      else
+      else if (Math.abs(calc_display.text()) !== 0)
       {
         display_calc_numbers("-" + calc_display.text());
       }
