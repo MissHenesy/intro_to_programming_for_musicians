@@ -225,15 +225,15 @@
     return result;
   }
 
-  function display_calc_numbers(num)
+  function display_calc_numbers(val)
   {
-    let result = num;
+    let result = val;
     let calc_display = $("#div_calculator #div_display");
 
     // Trim any leading zeroes from non-zero values
-    if (calc_display.text() && num !== 0)
+    if (calc_display.text() && val !== 0)
     {
-      result = num.toString().replace(/^0|^-0+/, "");
+      result = val.toString().replace(/^0|^-0+/, "");
     }
     calc_display.text(result);
   }
