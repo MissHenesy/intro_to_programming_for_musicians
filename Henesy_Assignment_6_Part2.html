@@ -129,7 +129,7 @@
     display_calc_numbers(0);
 
     calc_numbers.on("click", function() {
-      if (prev_action === "operator_click")
+      if (prev_action === "operator_click" || !$.isNumeric(calc_display.text()))
       {
         display_calc_numbers($(this).val());
       }
@@ -152,18 +152,21 @@
     });
 
     calc_operators.on("click", function() {
-      if (operator === "")
+      if ($.isNumeric(calc_display.text()))
       {
-        num1 = calc_display.text();
-        operator = $(this).val();
-        display_calc_numbers("");
-      }
-      else
-      {
-        if (prev_action === "number_click")
+        if (operator === "")
         {
-          display_calc_numbers(get_calc_total());
+          num1 = calc_display.text();
           operator = $(this).val();
+          display_calc_numbers("");
+        }
+        else
+        {
+          if (prev_action === "number_click")
+          {
+            display_calc_numbers(get_calc_total());
+            operator = $(this).val();
+          }
         }
       }
       prev_action = "operator_click";
