@@ -2,25 +2,25 @@ class Character
 {
   constructor(name, age, fave_song)
   {
-    this.name = name;
-    this.age = age;
-    this.fave_song = fave_song;
+    this._name = name;
+    this._age = age;
+    this._fave_song = fave_song;
   }
 
   sayMyName()
   {
-    return `My name is ${this.name}, and my favourite song is "${this.fave_song}."`;
+    return `My name is ${this._name}, and my favourite song is "${this._fave_song}."`;
   }
 
   compareAges(other_char)
   {
-    if (this.age < other_char.age)
+    if (this._age < other_char._age)
     {
-      return `${this.name} is younger than ${other_char.name}.`;
-    } else if (this.age === other_char.age) {
-      return `${this.name} is the same age as ${other_char.name}.`;
+      return `${this._name} is younger than ${other_char._name}.`;
+    } else if (this._age === other_char._age) {
+      return `${this._name} is the same age as ${other_char._name}.`;
     } else {
-      return `${this.name} is older than ${other_char.name}.`;
+      return `${this._name} is older than ${other_char._name}.`;
     }
   }
 }
