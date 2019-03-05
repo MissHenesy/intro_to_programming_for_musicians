@@ -1,0 +1,26 @@
+{
+  "name": "intro_to_programming_for_musicians",
+  "version": "1.0.0",
+  "description": "Repository for homework assignments",
+  "main": "index.html",
+  "dependencies": {},
+  "devDependencies": {
+    "jasmine": "^3.3.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MissHenesy/intro_to_programming_for_musicians.git"
+  },
+  "keywords": [
+    "programming"
+  ],
+  "author": "S. Henesy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MissHenesy/intro_to_programming_for_musicians/issues"
+  },
+  "homepage": "https://github.com/MissHenesy/intro_to_programming_for_musicians#readme"
+}
