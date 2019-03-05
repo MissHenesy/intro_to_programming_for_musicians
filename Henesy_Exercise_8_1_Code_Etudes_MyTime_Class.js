@@ -60,10 +60,10 @@ function get_formatted_time_string(str_time)
       i_new_hh,
       result;
 
-  if (str.indexOf("a.m.") > 0 || str.indexOf("am") > 0)
+  if (str.indexOf("a.m.") > -1 || str.indexOf("am") > -1)
   {
     str_meridian = "am";
-  } else if (str.indexOf("p.m.") > 0 || str.indexOf("pm") > 0) {
+  } else if (str.indexOf("p.m.") > -1 || str.indexOf("pm") > -1) {
     str_meridian = "pm";
   }
 
@@ -117,5 +117,5 @@ function get_sorted_times(arr_times)
 //
 // console.log(MyTime.compare(t1, t2));
 
-let arrTimes = ["1pm", "5:15am", "7pm", 4, "12:25"];
+let arrTimes = ["1pm", "5:15am",  "7pm", 4, "12:25"];
 console.log(get_sorted_times(arrTimes));
