@@ -5,6 +5,11 @@ class MySet
     this._dataset = new Set(opt_data);
   }
 
+  dataset()
+  {
+    return this._dataset;
+  }
+
   add(val)
   {
     this._dataset.add(val);

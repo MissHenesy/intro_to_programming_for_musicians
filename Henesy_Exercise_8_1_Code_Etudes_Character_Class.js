@@ -7,24 +7,38 @@ class Character
     this._fave_song = fave_song;
   }
 
+  age()
+  {
+    return this._age;
+  }
+
+  name()
+  {
+    return this._name;
+  }
+
+  fave_song()
+  {
+    return this._fave_song
+  }
+
   sayMyName()
   {
-    return `My name is ${this._name}, and my favourite song is "${this._fave_song}."`;
+    return `My name is ${this.name()}, and my favourite song is "${this.fave_song()}."`;
   }
 
   compareAges(other_char)
   {
-    if (this._age < other_char._age)
+    if (this.age() < other_char.age())
     {
-      return `${this._name} is younger than ${other_char._name}.`;
-    } else if (this._age === other_char._age) {
-      return `${this._name} is the same age as ${other_char._name}.`;
+      return `${this.name()} is younger than ${other_char.name()}.`;
+    } else if (this.age() === other_char.age()) {
+      return `${this.name()} is the same age as ${other_char.name()}.`;
     } else {
-      return `${this._name} is older than ${other_char._name}.`;
+      return `${this.name()} is older than ${other_char.name()}.`;
     }
   }
 }
-
 
 let beatle1 = new Character("John", 23, "You Make Me Dizzy Miss Lizzie");
 let beatle2 = new Character("Paul", 21, "It's So Easy");
