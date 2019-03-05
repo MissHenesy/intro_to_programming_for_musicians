@@ -52,11 +52,6 @@ class MyTime
 //------------------------------------------------------------------------
 // HELPER FUNCTIONS
 //------------------------------------------------------------------------
-function is_valid_time(str_time)
-{
-  return str_time;
-}
-
 function get_formatted_time_string(str_time)
 {
   let str = str_time.toString().toLowerCase(),
@@ -122,5 +117,5 @@ function get_sorted_times(arr_times)
 //
 // console.log(MyTime.compare(t1, t2));
 
-let arrTimes = ["1pm","5:15am","7pm",4, "12:25"];
+let arrTimes = ["1pm", "5:15am", "7pm", 4, "12:25"];
 console.log(get_sorted_times(arrTimes));
