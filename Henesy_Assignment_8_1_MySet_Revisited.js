@@ -5,14 +5,9 @@ class MySet
     this._dataset = new Set(opt_data);
   }
 
-  dataset()
-  {
-    return this._dataset;
-  }
-
   add(val)
   {
-    this._dataset.add(val);
+    return this._dataset.add(val);
   }
 
   remove(val)
@@ -42,6 +37,15 @@ class MySet
     // to the array affecting our original set.
     //console.log(this);
     return Array.from(this._dataset);
+  }
+
+  for_each()
+  {
+    this._dataset.forEach(function callback(element)
+      {
+        console.log(element);
+      }
+    );
   }
 
   is_equal(dataset_b)
@@ -81,12 +85,30 @@ console.log(ms3);
 console.log("ms2 size is: " + ms2.size());
 console.log("ms3 size is: " + ms3.size());
 console.log(ms2.has(3));
-// ms2.remove(3);
-// ms2.remove(1);
-// ms2.remove(2);
-// ms2.add(4);
-// ms2.add(5);
-// ms2.add(6);
+ms2.remove(3);
+ms2.remove(1);
+ms2.remove(2);
+ms2.add(4);
+ms2.add(5);
+ms2.add(6);
 console.log(ms2.has(3));
 console.log("Is ms2 = ms3?");
 console.log(ms2.is_equal(ms3));
+console.log("----------------------------------");
+ms1.for_each();
+console.log("----------------------------------");
+ms2.for_each();
+console.log("----------------------------------");
+ms3.for_each();
+console.log("----------------------------------");
+
+let ms4 = new MySet(["tea", "coffee", "milk"]);
+ms4.add("sugar").add("milk");
+ms4.add("cream");
+ms4.add(5);
+ms4.add("spoon");
+let ms4_arr = ms4.toArray();
+ms4_arr.push("saucer","scone","cucumber sandwich");
+console.log(ms4_arr);
+let foreach_vals = ms4.for_each();
+console.log(foreach_vals);
