@@ -42,7 +42,7 @@ class MySet
   {
     this._dataset.forEach(function callback(element)
       {
-        console.log(element);
+        console.log(`this forEach element = ${element}`);
       }
     );
   }
