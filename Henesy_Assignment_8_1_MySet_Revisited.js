@@ -23,7 +23,7 @@ class MySet
   {
     for (let i in this._dataset)
     {
-      if (this._dataset[i] == val)
+      if (this._dataset[i] === val)
       {
         this._dataset.splice(i, 1);
       }
