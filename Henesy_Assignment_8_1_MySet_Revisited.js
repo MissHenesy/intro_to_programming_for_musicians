@@ -2,57 +2,74 @@ class MySet
 {
   constructor(opt_data)
   {
-    this._dataset = new Set(opt_data);
+    if (opt_data)
+    {
+      this._dataset = opt_data;
+    } else {
+      this._dataset = [];
+    }
   }
 
-  add(val)
+  addValue(val)
   {
-    return this._dataset.add(val);
+    if (!this.hasValue(val))
+    {
+        this._dataset.push(val);
+    }
+    return this;
   }
 
-  remove(val)
+  removeValue(val)
   {
-    this._dataset.delete(val);
+    for (let i in this._dataset)
+    {
+      if (this._dataset[i] == val)
+      {
+        this._dataset.splice(i, 1);
+      }
+    }
+    return this;
   }
 
   size()
   {
-    return this._dataset.size;
+    return this._dataset.length;
   }
 
-  has(val)
+  hasValue(val)
   {
-    return this._dataset.has(val);
+    return (this._dataset.indexOf(val) > -1) ? true : false;
   }
 
-  clone()
+  cloneSet()
   {
-    return new MySet(this._dataset);
+    return new MySet(this.toArray());
   }
 
   toArray()
   {
-    // Using "Array.from" will clone our set,
-    // so we won't have to worry about changes
-    // to the array affecting our original set.
-    return Array.from(this._dataset);
+    let new_set = [];
+    for (let i of this._dataset)
+    {
+      new_set.push(i);
+    }
+    return new_set;
   }
 
-  for_each()
+  forEach(cb_function)
   {
-    this._dataset.forEach(function callback(element)
-      {
-        console.log(`this forEach element = ${element}`);
-      }
-    );
+    for (let i of this._dataset)
+    {
+      cb_function(i);
+    }
   }
 
-  is_equal(dataset_b)
+  isEqual(dataset_b)
   {
     if (this.size() !== dataset_b.size()) return false;
     for (let a of this._dataset)
     {
-      if (!dataset_b.has(a)) return false;
+      if (!dataset_b.hasValue(a)) return false;
     }
     return true;
   }
