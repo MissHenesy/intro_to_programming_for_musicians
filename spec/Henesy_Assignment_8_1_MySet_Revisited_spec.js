@@ -1,3 +1,6 @@
+//****************************************************************************
+//* SPEC TESTS FOR ASSIGNMENT 8
+//****************************************************************************
 describe(`Testing Assignment 8.1, 'MySet Revisited'.
           This is the checklist::`, () => {
   let test_set,
@@ -65,14 +68,17 @@ describe(`Testing Assignment 8.1, 'MySet Revisited'.
   it ("should use a forEach method that manipulates each value in our set", () => {
     test_set.addValue("piano").addValue("guitar").addValue("oboe")
     test_set.forEach(pluralize);
-    let div_results = document.getElementById("divForEachTest").innerHTML;
+    let div_results = document.getElementById("divToTestForEach").innerHTML;
     expect(div_results).toBe("pianos guitars oboes ");
   });
 });
 
+//****************************************************************************
+//* HELPER FUNCTION(S) FOR SPEC
+//****************************************************************************
 function pluralize(element)
 {
   element += "s";
-  div_with_new_vals = document.getElementById("divForEachTest");
+  div_with_new_vals = document.getElementById("divToTestForEach");
   div_with_new_vals.innerHTML += element + " ";
 }
