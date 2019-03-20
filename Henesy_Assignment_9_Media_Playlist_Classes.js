@@ -292,7 +292,6 @@ function array_sorter(arr, sort_criteria, sort_field)
     case "reverse_numerical":
       arr_copy = array_sorter(arr_copy, "numerical");
       arr_copy.reverse();
-      break;
   }
   return arr_copy;
 }
