@@ -142,11 +142,6 @@ class Song extends Media
   {
     return this._artist;
   }
-
-  details()
-  {
-    return `${this.title()} / ${this.artist()} / ${this.duration()} seconds`;
-  }
 }
 //-----------------------------------------------------------------------------
 class Podcast extends Media
@@ -161,11 +156,6 @@ class Podcast extends Media
   {
     return this._host;
   }
-
-  details()
-  {
-    return `${this.title()} / ${this.host()} / ${this.duration()} seconds`;
-  }
 }
 //-----------------------------------------------------------------------------
 class Movie extends Media
@@ -179,11 +169,6 @@ class Movie extends Media
   rating()
   {
     return this._rating;
-  }
-
-  details()
-  {
-    return `${this.title()} / ${this.rating()} / ${this.duration()} seconds`;
   }
 }
 /*****************************************************************************/
