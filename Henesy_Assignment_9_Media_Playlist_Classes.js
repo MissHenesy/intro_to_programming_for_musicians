@@ -68,7 +68,7 @@ class Playlist
     return this._track_list;
   }
 
-  now_playing()
+  show_now_playing()
   {
     if (this._current_track)
     {
@@ -227,12 +227,12 @@ function play_all_media(arr_playlist, sort_order)
   arr_playlist.sort(sort_order);
   arr_playlist.reset();
   arr_playlist.play();
-  str_result += arr_playlist.now_playing();
+  str_result += arr_playlist.show_now_playing();
 
   for (let i = 1; i < arr_playlist.track_list().length; i++)
   {
     arr_playlist.next();
-    str_result += arr_playlist.now_playing();
+    str_result += arr_playlist.show_now_playing();
   }
   return str_result;
 }
