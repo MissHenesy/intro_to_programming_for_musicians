@@ -86,7 +86,7 @@ class Playlist
 
   media_type()
   {
-    return this._current_track.constructor.name;
+    return this._current_track.type();
   }
 
   media_specific_text()
