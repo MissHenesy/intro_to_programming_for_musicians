@@ -116,10 +116,10 @@ function run_main_function()
   let bard4 = new Bard("Ringo Starr", 23, "South of the Border", "Drums");
   let bards = [bard1, bard2, bard3, bard4];
 
-  let fan1 = new Character("Cynthia Twist", 25, "All I've Got to Do", "Fan");
-  let fan2 = new Character("Jane Asher", 18, "Here, There, and Everywhere", "Fan");
-  let fan3 = new Character("Patti Boyd", 20, "I Need You", "Fan");
-  let fan4 = new Character("Mary Cox", 18, "Maureen is a Champ", "Fan");
+  let fan1 = new Character("Cynthia Twist", 25, "All I've Got to Do");
+  let fan2 = new Character("Jane Asher", 18, "Here, There, and Everywhere");
+  let fan3 = new Character("Patti Boyd", 20, "I Need You");
+  let fan4 = new Character("Mary Cox", 18, "Maureen is a Champ");
   let fans = [fan1, fan2, fan3, fan4];
 
   let all_chars = wizards.concat(bards).concat(fans);
