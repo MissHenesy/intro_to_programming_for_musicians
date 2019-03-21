@@ -58,6 +58,9 @@ class Playlist
       case "reverse_alphabetical":
         this._track_list = array_sorter(this._track_list, "reverse_alphabetical", "title");
         break;
+      case "reverse_numerical":
+        this._track_list = array_sorter(this._track_list, "reverse_numerical", "duration");
+        break;
       default:
         this._track_list = this._original_track_list;
     }
@@ -276,7 +279,7 @@ function array_sorter(arr, sort_criteria, sort_field)
           }
         );
       } else {
-        arr_copy.sort(function(a, b) { return b - a} );
+        arr_copy.sort(function(a, b) { return a - b} );
       }
       break;
     case "random":
@@ -290,7 +293,7 @@ function array_sorter(arr, sort_criteria, sort_field)
       arr_copy.reverse();
       break;
     case "reverse_numerical":
-      arr_copy = array_sorter(arr_copy, "numerical");
+      arr_copy = array_sorter(arr_copy, "numerical", sort_field);
       arr_copy.reverse();
   }
   return arr_copy;
