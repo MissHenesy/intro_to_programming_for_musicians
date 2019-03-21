@@ -55,10 +55,10 @@ class Playlist
         this._track_list = this._original_track_list;
         this._track_list = array_sorter(this._track_list, "reverse_order");
         break;
-      case "reverse_alphabetical":
+      case "reverse_title":
         this._track_list = array_sorter(this._track_list, "reverse_alphabetical", "title");
         break;
-      case "reverse_numerical":
+      case "reverse_duration":
         this._track_list = array_sorter(this._track_list, "reverse_numerical", "duration");
         break;
       default:
@@ -210,7 +210,7 @@ function run_main_function()
   console.log(play_all_media(my_playlist));
   console.log(play_all_media(my_playlist, "title"));
   console.log(play_all_media(my_playlist, "duration"));
-  console.log(play_all_media(my_playlist, "reverse_alphabetical"));
+  console.log(play_all_media(my_playlist, "reverse_title"));
   console.log(play_all_media(my_playlist, "shuffle"));
 }
 /*****************************************************************************/
