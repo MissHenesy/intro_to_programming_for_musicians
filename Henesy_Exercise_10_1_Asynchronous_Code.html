@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Henesy Exercise 10.1</title>
+    <style type="text/css">
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 1.05em;
+        background-color: linen;
+      }
+      h1 {
+        text-align: center;
+        font-size: 2.5em;
+      }
+      h2 {
+        font-size: 1.1em;
+      }
+      #div_page_contents {
+        margin: 0 auto;
+        width: 98%;
+      }
+      a {
+        font-weight: bold;
+      }
+      p {
+        margin-left: 25px;
+      }
+      iframe {
+        margin: 0 10px 10px 0;
+        width: 300px;
+        height: 300px;
+      }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" language="javascript">
+      const API_URL_MCNEILL = "https://patrickmcneill.com/itp/urls.txt";
+
+      $(document).ready(function() {
+        create_iframes();
+        await_callbacks(API_URL_MCNEILL).then(response => show_all_results(response));
+      });
+      //************************************************************************
+      //* MAIN FUNCTIONS
+      //************************************************************************
+      //------------------------------------------------------------------------
+      function delay(ms)
+      {
+        /* Write a function called "delay" that is passed a number of milliseconds.
+        It should return a promise that will resolve after that amount of time
+        has elapsed. When working, it should be possible to call it with
+        "await delay(1000);" to introduce a wait into your code. */
+        return new Promise((resolve) => setTimeout(() => resolve("BOO!!"), ms));
+      }
+      //------------------------------------------------------------------------
+      function api_promise(api_url)
+      {
+        return new Promise((resolve) => resolve($.get(api_url)));
+      }
+      //------------------------------------------------------------------------
+      async function await_callbacks(url = "")
+      {
+        let promises = [];
+        let millisecs = 100;
+
+        promises.push(api_promise(url), delay(millisecs));
+        let result = await Promise.all(promises);
+        return result;
+      }
+      //------------------------------------------------------------------------
+      async function get_external_html_info(arr_urls)
+      {
+          // Attempts to read the HTML contents from an array of urls,
+          // and returns a map that consists of the url address and the
+          // length of its html contents.
+          // E.G.: "https://www.some_web_page.com", 5082.
+          // If we encounter errors, we will just ignore them and try to
+          // the read the next html page in the array.
+          let map_results = new Map(),
+              html = "";
+
+          for (let i of arr_urls)
+          {
+            try
+            {
+              html = await $.get(i);
+              map_results.set(i, html.length);
+            }
+            catch (ignore)
+            {
+              console.log("An expected error occurred, and we don't care!");
+              continue;
+            }
+          }
+          return map_results;
+      }
+      //------------------------------------------------------------------------
+      function show_all_results(response_string)
+      {
+        // Builds the HTML content that we will display on our page.
+        let urls = response_string[0].split("\n")
+        let url_results = get_array_min_max(urls);
+        let arr_urls = url_results.arr_urls;
+        let min_url = url_results.min_url;
+        let max_url = url_results.max_url;
+        let el_results = $("#div_url_results");
+        let result_urls;
+
+        result_urls = `<h2>THESE ARE THE URL ADDRESSES I FOUND
+                       IN YOUR <a href="${API_URL_MCNEILL}" target="_blank">
+                       API PAGE</a>:</h2><ul>`;
+        for (i of urls)
+        {
+          if (i) result_urls += `<li><a href="i" target="_blank">${i}</a></li>`;
+        }
+        result_urls += "</ul>";
+        let result_lengths = `<h2>SHORTEST URL ADDRESS</h2>
+                             <p><a href="${min_url}" target="_blank">
+                             ${min_url}</a>, with a char count of: <b>
+                             ${min_url.length}</b></p>
+                             <h2>LONGEST URL ADDRESS</h2>
+                             <p><a href="${max_url} target="_blank">${max_url}</a>,
+                             with a char count of: <b>${max_url.length}</b></p>`;
+        let result_delay = `<h2>RESULT OF OUR DELAY FUNCTION</h2>
+                            <p>We set a timeout to return a string, and the results
+                            of that string are back!!<br /> (We hope you didn't
+                            have to wait too long :-) )<br />
+                            The string says: <b>${response_string[1]}<b>`;
+
+        el_results.html(result_delay + result_urls + result_lengths);
+        // We're actually still in an asynchronous scope here, and we need
+        // to pass our urls to another function that will read the html
+        // content and tell us which page has the most/least content.
+        show_html_data_results(urls);
+      }
+      //------------------------------------------------------------------------
+      function show_html_data_results(arr_external_urls)
+      {
+        // We couldn't complete Part 2 of this week's exercises because
+        // we are coming across "CORS Same-Origin" errors for two of
+        // the three URL addresses in Patrck McNeill's api text page, which
+        // resides at: https://patrickmcneill.com/itp/urls.txt)
+
+        // However, I am game to see if I can recreate what we were supposed
+        // to accomplish. I've created a few iframes filled with external
+        // html content. Even though that content is still restricted, at
+        // least I'm getting "about:blank" back. That's content enough!
+        // I can compare this content with the size of the html content I
+        // can get back from the one page that I can read --
+        // https://patrickmcneill.com/itp/urls.txt.
+        // It returns a length of 88 characters, and the other web pages return
+        // a length of 11 characters.
+
+        // So that I can try to recreate the intent of this exercise, I'll just
+        // pretend that Patrick's web page is an interior web page (after all,
+        // it actually IS listed in his text file). Then I'll compare this
+        // to the iframe content, and state which web page has the most
+        // *readable* content on my web page results. Phew!
+        try
+        {
+          let arr_urls = arr_external_urls.filter(urls => urls.length > 0),
+              iframes = $("iframe").filter(".compare"),
+              map_html_sizes = new Map();
+
+          console.log(iframes);
+          for (let i of iframes)
+          {
+            console.log("HI!!!")
+            map_html_sizes.set(i.src, i.contentDocument.URL.length);
+          }
+
+          get_external_html_info(arr_urls)
+            .then(response =>
+              {
+                response.forEach((html_length, url) =>
+                  {
+                    map_html_sizes.set(url, html_length);
+                  }
+                );
+                let max_html = [...map_html_sizes.entries()].reduce((a, e) => e[1] > a[1] ? e : a);
+                let min_html = [...map_html_sizes.entries()].reduce((a, e) => e[1] < a[1] ? e : a);
+
+                let el_results = $("#div_html_data_results");
+                let result_text = `<h2>URL WITH THE MOST AMOUNT OF HTML</h2>
+                                  <p><a href="${max_html[0]}" target="_blank">
+                                  ${max_html[0]}</a>, with a char count of
+                                  <b>${max_html[1]}</b></p>
+                                  <h2>URL WITH THE LEAST AMOUNT OF HTML</h2>
+                                  <p><a href="${min_html[0]}" target="_blank">
+                                  ${min_html[0]}</a>, with a char count of
+                                  <b>${min_html[1]}</b></p>`;
+                el_results.html(result_text);
+
+
+              }
+            );
+        }
+        catch (e)
+        {
+          console.log(e.message);
+        }
+      }
+      //************************************************************************
+      //* HELPER FUNCTIONS
+      //************************************************************************
+      //------------------------------------------------------------------------
+      function get_array_min_max(arr)
+      {
+        let arr_urls = arr.filter(arr => arr.length > 0);
+        let min_length = Math.min(...arr_urls.map(({ length }) => length));
+        let max_length = Math.max(...arr_urls.map(({ length }) => length));
+        let min_url = arr.filter(arr => arr.length === min_length)[0].toString();
+        let max_url = arr.filter(arr => arr.length === max_length)[0].toString();
+
+        return { arr_urls, min_url, max_url }
+      }
+      //------------------------------------------------------------------------
+      function create_iframes()
+      {
+          let div = $("#div_page_contents");
+
+          div.append(`<iframe src="${API_URL_MCNEILL}" />`);
+          div.append(`<iframe class="compare" src="http://www.computinghistory.org.uk/det/4007/Atari-PONG/" />`);
+          div.append(`<iframe class="compare" src="http://www.satirewire.com/content1/" />`);
+          div.append(`<iframe class="compare" src="https://www.htmlgoodies.com/" />`);
+      }
+      //------------------------------------------------------------------------
+      function array_sorter(arr, sort_criteria)
+      {
+        // Wound up not using this function, but it's still pretty handy
+        // to have around
+        let arr_copy = arr.slice();
+        switch(sort_criteria)
+        {
+          case "length":
+            arr_copy.sort(function(a, b) { return a.length - b.length || a.localeCompare(b) });
+            break;
+          default:
+            arr_copy.sort();
+        }
+        return arr_copy;
+      }
+    </script>
+  </head>
+  <!--||********************************************************************-->
+  <!--|| HTML AREA -->
+  <!--||********************************************************************-->
+  <body>
+    <div id="div_container">
+      <div id="div_page_contents">
+        <h1>Henesy Exercise 10.1 Code Etudes</h1>
+        <hr>
+        <div id="div_url_results"></div>
+        <div id="div_html_data_results"></div>
+        <div id="div_iframes">
+          <h2>THESE ARE SOME URLS IN IFRAMES!</h2>
+          <p>
+            Please enjoy these iframes while we wait for our asynchronous calls
+            to finish their jobs and return with the data you requested.
+          </p>
+          <p id="iframe_urls"></p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
