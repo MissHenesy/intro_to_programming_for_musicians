@@ -88,7 +88,7 @@
             }
             catch (ignore)
             {
-              console.log("An expected error occurred, and we don't care!");
+              console.log(`An expected error occurred, and we don't care!\n${ignore.message}`);
               continue;
             }
           }
