@@ -61,7 +61,7 @@
       async function await_callbacks(url = "")
       {
         let promises = [];
-        let millisecs = 100;
+        let millisecs = 80;
 
         promises.push(api_promise(url), delay(millisecs));
         let result = await Promise.all(promises);
@@ -165,8 +165,16 @@
           console.log(iframes);
           for (let i of iframes)
           {
-            console.log("HI!!!")
-            map_html_sizes.set(i.src, i.contentDocument.URL.length);
+            try
+            {
+              map_html_sizes.set(i.src, i.contentDocument.URL.length);
+            }
+            catch (ignore)
+            {
+              console.log(`An expected error occurred, and we don't care!\n${ignore.message}`);
+              continue;
+            }
+
           }
 
           get_external_html_info(arr_urls)
