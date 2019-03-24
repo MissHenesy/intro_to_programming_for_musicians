@@ -162,7 +162,6 @@
               iframes = $("iframe").filter(".compare"),
               map_html_sizes = new Map();
 
-          console.log(iframes);
           for (let i of iframes)
           {
             try
@@ -174,7 +173,6 @@
               console.log(`An expected error occurred, and we don't care!\n${ignore.message}`);
               continue;
             }
-
           }
 
           get_external_html_info(arr_urls)
@@ -198,8 +196,6 @@
                                   ${min_html[0]}</a>, with a char count of
                                   <b>${min_html[1]}</b></p>`;
                 el_results.html(result_text);
-
-
               }
             );
         }
