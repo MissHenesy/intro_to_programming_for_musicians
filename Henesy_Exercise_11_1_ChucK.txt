@@ -49,18 +49,18 @@ fun void vecho_Shred( )
 spork ~ vecho_Shred();
 
 // MIDI note constants
-36 => int c2;	    48 => int c3;
-37 => int cs2;	  49 => int cs3;
-38 => int d2;	    50 => int d3;
-39 => int ds2;	  51 => int ds3;
-40 => int e2;	    52 => int e3;
-41 => int f2;	    53 => int f3;
-42 => int fs2;	  54 => int fs3;
-43 => int g2;	    55 => int g3;
-44 => int gs2;	  56 => int gs3;
-45 => int a2;	    57 => int a3;
-46 => int as2;	  58 => int as3;
-47 => int b2;	    59 => int b3;
+36 => int c2;     48 => int c3;
+37 => int cs2;    49 => int cs3;
+38 => int d2;     50 => int d3;
+39 => int ds2;    51 => int ds3;
+40 => int e2;     52 => int e3;
+41 => int f2;     53 => int f3;
+42 => int fs2;    54 => int fs3;
+43 => int g2;     55 => int g3;
+44 => int gs2;    56 => int gs3;
+45 => int a2;     57 => int a3;
+46 => int as2;    58 => int as3;
+47 => int b2;     59 => int b3;
 
 60 => int c4;     72 => int c5;
 61 => int cs4;    73 => int cs5;
