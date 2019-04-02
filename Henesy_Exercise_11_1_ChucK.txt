@@ -80,7 +80,7 @@ fun void playNote( int n, int d )
 fun void playFinalNote( int n )
 {
     Std.mtof( n + trans ) => s.freq;
-    fade(s,s.gain(),0.001,0.002);
+    fade(s,s.gain(),0.001,0.001);
 }
 
 // Main loop: play Susan's Melody
