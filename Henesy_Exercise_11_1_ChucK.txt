@@ -92,6 +92,8 @@ dur duration[500];
 [ [c4,8],[c4,8],[b3,8],[b3,8],[d4,8],[f4,8],[g4,8],[a4,8],[f4,8],
   [d4,8],[b3,8],[d4,8],[c4,4],[b3,16],[a3,16],[b3,8] ] @=> int susansMelody[][];
 
+// We can transpose the pitch up or down from 0 if we want to,
+// ain't that just so cool?
 0 => int trans;
 
 // Play a single note
