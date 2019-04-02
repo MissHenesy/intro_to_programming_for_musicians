@@ -8,9 +8,9 @@ PercFlut s => JCRev r => Echo a_echo => Echo b_echo => Echo c_echo => dac;
 220.0 => s.freq;
 0.4 => s.gain;
 0.4 => r.gain;
-0.5 => r.mix;
-500::ms => a_echo.max => b_echo.max => c_echo.max;
-375::ms => a_echo.delay => b_echo.delay => c_echo.delay;
+0.7 => r.mix;
+300::ms => a_echo.max => b_echo.max => c_echo.max;
+150::ms => a_echo.delay => b_echo.delay => c_echo.delay;
 .20 => a_echo.mix => b_echo.mix => c_echo.mix;
 
 // shred to modulate the mix
