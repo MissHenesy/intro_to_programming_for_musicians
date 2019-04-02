@@ -3,50 +3,26 @@
 // Author: Susan Henesy
 // Date:   2019-04-01
 //**************************************************************
-
 PercFlut s => JCRev r => Echo a_echo => Echo b_echo => Echo c_echo => dac;
 220.0 => s.freq;
-0.4 => s.gain;
-0.4 => r.gain;
+0.6 => s.gain;
+0.6 => r.gain;
 0.7 => r.mix;
 300::ms => a_echo.max => b_echo.max => c_echo.max;
 150::ms => a_echo.delay => b_echo.delay => c_echo.delay;
 .20 => a_echo.mix => b_echo.mix => c_echo.mix;
 
-// shred to modulate the mix
-fun void vecho_Shred( )
+// Fade function, operates on any type of Ugen
+fun void fade( UGen osc, float begin, float end, float step )
 {
-    0.0 => float decider;
-    0.0 => float mix;
-    0.0 => float old;
-    0.0 => float inc;
-    0 => int n;
-
-    // time loop
-    while( true )
+    begin => float val;
+    while ( val > end )
     {
-        Math.random2f( 0, 1 ) => decider;
-        if( decider < .3 ) 0.0 => mix;
-        else if( decider < .6 ) .08 => mix;
-        else if( decider < .8 ) .5 => mix;
-        else .15 => mix;
-
-        // find the increment
-        ( mix-old )/1000.0 => inc;
-        1000 => n;
-        while( n-- )
-        {
-            old + inc => old;
-            old => a_echo.mix => b_echo.mix => c_echo.mix;
-            1::ms => now;
-        }
-        mix => old;
-        Math.random2( 2,6 )::second => now;
+        val => osc.gain;
+        step -=> val;
+        0.01::second => now;
     }
 }
-
-// let echo shred go
-spork ~ vecho_Shred();
 
 // MIDI note constants
 36 => int c2;     48 => int c3;
@@ -90,10 +66,10 @@ dur duration[500];
 
 // The Melody
 [ [c4,8],[c4,8],[b3,8],[b3,8],[d4,8],[f4,8],[g4,8],[a4,8],[f4,8],
-  [d4,8],[b3,8],[d4,8],[c4,4],[b3,16],[a3,16],[b3,8] ] @=> int susansMelody[][];
+[d4,8],[b3,8],[d4,8],[c4,4],[b3,16],[a3,16],[b3,8] ] @=> int susansMelody[][];
 
 // We can transpose the pitch up or down from 0 if we want to,
-// ain't that just so cool?
+// how cool is that?
 0 => int trans;
 
 // Play a single note
@@ -102,6 +78,13 @@ fun void playNote( int n, int d )
     Std.mtof( n + trans ) => s.freq;
     Math.random2f( 0.6, 0.8 ) => s.noteOn;
     duration[d] => now;
+}
+
+// Play the final note with a fade effect
+fun void playFinalNote( int n )
+{
+    Std.mtof( n + trans ) => s.freq;
+    fade(s,s.gain(),0.001,0.002);
 }
 
 // Main loop: play Susan's Melody
@@ -113,7 +96,7 @@ do
         playNote( susansMelody[i][0], susansMelody[i][1] );
     }
     iCtr++;
-} while ( iCtr <= 4 );
+} while ( iCtr <= 1 );
 
 // Play the final bar without the expectant-sounding triplet at the end
 for ( 0 => int i; i < susansMelody.cap()-3; i++ )
@@ -125,6 +108,7 @@ for ( 0 => int i; i < susansMelody.cap()-3; i++ )
     else
     {
         // We are on the last note, so stretch it out
-        playNote( susansMelody[i][0], 1 );
+        // with our playFinalNote function
+        playFinalNote( susansMelody[i][0] );
     }
 }
