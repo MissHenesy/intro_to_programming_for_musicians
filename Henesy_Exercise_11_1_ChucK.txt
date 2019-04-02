@@ -1,0 +1,128 @@
+//**************************************************************
+// Exercise 11.1, Code Etudes: Fun with ChucK
+// Author: Susan Henesy
+// Date:   2019-04-01 
+//**************************************************************
+
+PercFlut s => JCRev r => Echo a_echo => Echo b_echo => Echo c_echo => dac;
+220.0 => s.freq;
+0.4 => s.gain;
+0.4 => r.gain;
+0.5 => r.mix;
+500::ms => a_echo.max => b_echo.max => c_echo.max;
+375::ms => a_echo.delay => b_echo.delay => c_echo.delay;
+.20 => a_echo.mix => b_echo.mix => c_echo.mix;
+
+// shred to modulate the mix
+fun void vecho_Shred( )
+{
+    0.0 => float decider;
+    0.0 => float mix;
+    0.0 => float old;
+    0.0 => float inc;
+    0 => int n;
+
+    // time loop
+    while( true )
+    {
+        Math.random2f( 0, 1 ) => decider;
+        if( decider < .3 ) 0.0 => mix;
+        else if( decider < .6 ) .08 => mix;
+        else if( decider < .8 ) .5 => mix;
+        else .15 => mix;
+
+        // find the increment
+        ( mix-old )/1000.0 => inc;
+        1000 => n;
+        while( n-- )
+        {
+            old + inc => old;
+            old => a_echo.mix => b_echo.mix => c_echo.mix;
+            1::ms => now;
+        }
+        mix => old;
+        Math.random2( 2,6 )::second => now;
+    }
+}
+
+// let echo shred go
+spork ~ vecho_Shred();
+
+// MIDI note constants
+36 => int c2;	    48 => int c3;
+37 => int cs2;	  49 => int cs3;
+38 => int d2;	    50 => int d3;
+39 => int ds2;	  51 => int ds3;
+40 => int e2;	    52 => int e3;
+41 => int f2;	    53 => int f3;
+42 => int fs2;	  54 => int fs3;
+43 => int g2;	    55 => int g3;
+44 => int gs2;	  56 => int gs3;
+45 => int a2;	    57 => int a3;
+46 => int as2;	  58 => int as3;
+47 => int b2;	    59 => int b3;
+
+60 => int c4;     72 => int c5;
+61 => int cs4;    73 => int cs5;
+62 => int d4;     74 => int d5;
+63 => int ds4;    75 => int ds5;
+64 => int e4;     76 => int e5;
+65 => int f4;     77 => int f5;
+66 => int fs4;    78 => int fs5;
+67 => int g4;     79 => int g5;
+68 => int gs4;    80 => int gs5;
+69 => int a4;     81 => int a5;
+70 => int as4;    82 => int as5;
+71 => int b4;     83 => int b5;
+
+// We use musical tempo, and symbolic durations
+75 => int tempo; // Maelzel Metronome units (quarters per minute)
+
+// integers 1,2,4,8,16 mean musical figures
+dur duration[500];
+240000::ms / ( 1 * tempo )  => duration[1];  // whole
+240000::ms / ( 2 * tempo )  => duration[2];  // half
+240000::ms / ( 4 * tempo )  => duration[4];  // quarter (crotchet)
+240000::ms / ( 8 * tempo )  => duration[8];  // eighth (quaver)
+240000::ms / ( 16 * tempo ) => duration[16]; // sixteenth
+( duration[4] + duration[8] ) => duration[5];  // dotted quarter
+( duration[2] + duration[4] ) => duration[3];  // dotted half
+
+// The Melody
+[ [c4,8],[c4,8],[b3,8],[b3,8],[d4,8],[f4,8],[g4,8],[a4,8],[f4,8],
+  [d4,8],[b3,8],[d4,8],[c4,4],[b3,16],[a3,16],[b3,8] ] @=> int susansMelody[][];
+
+0 => int trans;
+
+// Play a single note
+fun void playNote( int n, int d )
+{
+    Std.mtof( n + trans ) => s.freq;
+    Math.random2f( 0.6, 0.8 ) => s.noteOn;
+    duration[d] => now;
+}
+
+// Main loop: play Susan's Melody
+1 => int iCtr;
+do
+{
+    for ( 0 => int i; i < susansMelody.cap(); i++ )
+    {
+        playNote( susansMelody[i][0], susansMelody[i][1] );
+    }
+    iCtr++;
+} while ( iCtr <= 4 );
+
+// Play the final bar without the expectant-sounding triplet at the end
+for ( 0 => int i; i < susansMelody.cap()-3; i++ )
+{
+    if ( i < susansMelody.cap()-4 )
+    {
+        playNote( susansMelody[i][0], susansMelody[i][1] );
+    }
+    else
+    {
+        // We are on the last note, so stretch it out
+        playNote( susansMelody[i][0], 1 );
+    }
+}
