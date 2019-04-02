@@ -3,14 +3,10 @@
 // Author: Susan Henesy
 // Date:   2019-04-01
 //**************************************************************
-PercFlut s => JCRev r => Echo a_echo => Echo b_echo => Echo c_echo => dac;
-220.0 => s.freq;
+PercFlut s => JCRev r => dac;
 0.6 => s.gain;
 0.6 => r.gain;
 0.7 => r.mix;
-300::ms => a_echo.max => b_echo.max => c_echo.max;
-150::ms => a_echo.delay => b_echo.delay => c_echo.delay;
-.20 => a_echo.mix => b_echo.mix => c_echo.mix;
 
 // Fade function, operates on any type of Ugen
 fun void fade( UGen osc, float begin, float end, float step )
@@ -96,7 +92,7 @@ do
         playNote( susansMelody[i][0], susansMelody[i][1] );
     }
     iCtr++;
-} while ( iCtr <= 1 );
+} while ( iCtr <= 4 );
 
 // Play the final bar without the expectant-sounding triplet at the end
 for ( 0 => int i; i < susansMelody.cap()-3; i++ )
